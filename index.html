@@ -40,6 +40,11 @@
         .custom-placeholder::placeholder {
             color: #9CA3AF; /* text-gray-400 */
         }
+
+        /* Estilo para inputs (conforme o visual da imagem) */
+        .input-style {
+            background-color: #f7f9fa; /* Um cinza muito claro, próximo ao #f1f5f9 do bg-slate-100 */
+        }
     </style>
 </head>
 <body class="bg-slate-100 flex items-center justify-center min-h-screen px-4">
@@ -63,7 +68,7 @@
                     name="email" 
                     required
                     placeholder="seu.email@turbosul.com"
-                    class="custom-placeholder w-full px-4 py-3 bg-slate-50 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                    class="custom-placeholder input-style w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
                 >
             </div>
 
@@ -76,7 +81,7 @@
                     name="password" 
                     required
                     placeholder="Sua senha"
-                    class="custom-placeholder w-full px-4 py-3 bg-slate-50 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                    class="custom-placeholder input-style w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
                 >
             </div>
 
@@ -92,7 +97,7 @@
         </form>
 
         <!-- Mensagem de Erro -->
-        <div class="mt-6 text-center h-5"> <!-- Altura fixa para evitar que o layout "pule" -->
+        <div class="mt-6 text-center h-5"> 
             <p id="error-message" class="text-sm font-medium text-red-600"></p>
         </div>
     </main>
@@ -100,32 +105,30 @@
     <!-- Inclusão da biblioteca do Supabase via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- Lógica de Autenticação com JavaScript Puro (AGORA REDIRECIONANDO PARA A URL EXTERNA) -->
+    <!-- Lógica de Autenticação com JavaScript Puro (CORRIGIDA) -->
     <script>
         // 1. Inicialização do Cliente Supabase
         const SUPABASE_URL = 'https://zghaqlaqozsskfldgsfe.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpnaGFxbGFxb3pzc2tmbGRnc2ZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkyMDY1MzQsImV4cCI6MjA4NDc4MjUzNH0.aC2DMOUNhS2uK6KGI5Sf2c2vGhrCKHMnRyZhL3WwSus';
         
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // CORREÇÃO APLICADA AQUI: Usando 'supabaseClient' para a instância
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // 2. Lógica do Formulário de Login
         const loginForm = document.getElementById('login-form');
         const errorMessage = document.getElementById('error-message');
-
-        // URL de destino correta fornecida pelo usuário
         const DESTINATION_URL = 'https://mareflow.github.io/turbosul-prevendas/';
 
         loginForm.addEventListener('submit', async (event) => {
             event.preventDefault();
 
-            // Limpa a mensagem de erro ao tentar novamente
             errorMessage.textContent = '';
 
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            // Tenta fazer o login
-            const { error } = await supabase.auth.signInWithPassword({
+            // Chamada CORRIGIDA: Usa a nova variável 'supabaseClient'
+            const { error } = await supabaseClient.auth.signInWithPassword({
                 email: email,
                 password: password,
             });
@@ -134,7 +137,6 @@
             if (error) {
                 errorMessage.textContent = 'Usuário ou senha inválidos.';
             } else {
-                // *** ALTERAÇÃO PRINCIPAL AQUI: Redireciona para a URL de destino externa
                 window.location.href = DESTINATION_URL;
             }
         });
