@@ -100,7 +100,7 @@
     <!-- Inclusão da biblioteca do Supabase via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- Lógica de Autenticação com JavaScript Puro (INALTERADA) -->
+    <!-- Lógica de Autenticação com JavaScript Puro (AGORA REDIRECIONANDO PARA A URL EXTERNA) -->
     <script>
         // 1. Inicialização do Cliente Supabase
         const SUPABASE_URL = 'https://zghaqlaqozsskfldgsfe.supabase.co';
@@ -111,6 +111,9 @@
         // 2. Lógica do Formulário de Login
         const loginForm = document.getElementById('login-form');
         const errorMessage = document.getElementById('error-message');
+
+        // URL de destino correta fornecida pelo usuário
+        const DESTINATION_URL = 'https://mareflow.github.io/turbosul-prevendas/';
 
         loginForm.addEventListener('submit', async (event) => {
             event.preventDefault();
@@ -131,8 +134,8 @@
             if (error) {
                 errorMessage.textContent = 'Usuário ou senha inválidos.';
             } else {
-                // Em caso de sucesso, redireciona
-                window.location.href = '/prevendas';
+                // *** ALTERAÇÃO PRINCIPAL AQUI: Redireciona para a URL de destino externa
+                window.location.href = DESTINATION_URL;
             }
         });
     </script>
