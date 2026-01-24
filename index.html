@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | TurboSul - Controle de Produção</title>
+    
+    <!-- Inclusão do Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Configuração de tema customizado para o Tailwind (opcional, mas bom para consistência) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-blue': '#0a74da',
+                        'brand-blue-dark': '#085ea6',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Estilos adicionais para garantir a aparência em todos os navegadores -->
+    <style>
+        /* Garante que o corpo e o html ocupem toda a altura da tela */
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Inter', sans-serif; /* Uma fonte moderna e limpa */
+        }
+        /* Melhora a aparência do placeholder no tema escuro */
+        .custom-placeholder::placeholder {
+            color: #6b7280; /* gray-500 */
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-900 flex items-center justify-center min-h-screen">
+
+    <main class="w-full max-w-md mx-auto p-8 bg-gray-800 rounded-xl shadow-2xl">
+        <!-- Seção do Logo e Título -->
+        <div class="flex flex-col items-center mb-8">
+            <img src="https://i.postimg.cc/Jh5Jvrc9/IMG-7901.png" alt="Logo TurboSul" class="w-24 h-24 rounded-full mb-4 border-2 border-gray-700">
+            <h1 class="text-2xl font-bold text-gray-100">TurboSul - Controle de Produção</h1>
+        </div>
+
+        <!-- Formulário de Login -->
+        <form id="login-form" class="space-y-6">
+            <!-- Campo de Email -->
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Usuário</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    required
+                    placeholder="seuemail@exemplo.com"
+                    class="custom-placeholder w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-blue transition duration-200"
+                >
+            </div>
+
+            <!-- Campo de Senha -->
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-300 mb-2">Senha</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    required
+                    placeholder="********"
+                    class="custom-placeholder w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-blue transition duration-200"
+                >
+            </div>
+
+            <!-- Botão de Entrar -->
+            <div>
+                <button 
+                    type="submit"
+                    class="w-full bg-brand-blue hover:bg-brand-blue-dark text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-brand-blue transition duration-300 ease-in-out"
+                >
+                    Entrar
+                </button>
+            </div>
+        </form>
+
+        <!-- Mensagem de Erro -->
+        <div class="mt-4 text-center">
+            <p id="error-message" class="text-sm font-medium transition-opacity duration-300 opacity-0"></p>
+        </div>
+    </main>
+
+    <!-- Inclusão da biblioteca do Supabase via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Lógica de Autenticação com JavaScript Puro -->
+    <script>
+        // 1. Inicialização do Cliente Supabase
+        const SUPABASE_URL = 'https://zghaqlaqozsskfldgsfe.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpnaGFxbGFxb3pzc2tmbGRnc2ZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkyMDY1MzQsImV4cCI6MjA4NDc4MjUzNH0.aC2DMOUNhS2uK6KGI5Sf2c2vGhrCKHMnRyZhL3WwSus';
+        
+        // Acessa o objeto global 'supabase' injetado pelo script da CDN e usa o método createClient
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // 2. Lógica do Formulário de Login
+        const loginForm = document.getElementById('login-form');
+        const errorMessage = document.getElementById('error-message');
+
+        loginForm.addEventListener('submit', async (event) => {
+            // Previne o comportamento padrão de recarregar a página
+            event.preventDefault();
+
+            // Reseta a mensagem de erro anterior
+            errorMessage.textContent = '';
+            errorMessage.classList.remove('text-red-500');
+            errorMessage.classList.add('opacity-0');
+
+            // Obtém os valores dos campos de input
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Tenta fazer o login com o Supabase
+            const { error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
+
+            // 3. Tratamento da Resposta
+            if (error) {
+                // Se houver erro, exibe a mensagem
+                errorMessage.textContent = 'Usuário ou senha inválidos.';
+                errorMessage.classList.add('text-red-500');
+                errorMessage.classList.remove('opacity-0');
+            } else {
+                // Se o login for bem-sucedido, redireciona para a página de pré-vendas
+                window.location.href = '/prevendas';
+            }
+        });
+    </script>
+</body>
+</html>
