@@ -3,141 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | TurboSul - Controle de Produção</title>
+    <title>Login | TurboSul</title>
     
-    <!-- Inclusão do Tailwind CSS via CDN -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Importação da fonte 'Inter' do Google Fonts -->
+    <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Estilos customizados e animações -->
     <style>
-        /* Define a fonte 'Inter' como padrão para toda a página */
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-
-        /* Animação de entrada para o card de login */
-        @keyframes fadeInScaleUp {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .animate-entry {
-            animation: fadeInScaleUp 0.5s ease-out forwards;
-        }
-        
-        /* Melhora a aparência do placeholder */
-        .custom-placeholder::placeholder {
-            color: #9CA3AF; /* text-gray-400 */
-        }
-
-        /* Estilo para inputs (conforme o visual da imagem) */
-        .input-style {
-            background-color: #f7f9fa; /* Um cinza muito claro, próximo ao #f1f5f9 do bg-slate-100 */
+        body { font-family: 'Inter', sans-serif; }
+        .input-focus:focus {
+            border-color: #2563EB;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+            outline: none;
         }
     </style>
 </head>
-<body class="bg-slate-100 flex items-center justify-center min-h-screen px-4">
+<body class="bg-slate-50 min-h-screen flex flex-col justify-between">
 
-    <!-- Card de Login com animação de entrada -->
-    <main class="w-full max-w-md bg-white rounded-xl shadow-lg p-10 animate-entry">
-        <!-- Seção do Logo e Título -->
-        <div class="flex flex-col items-center mb-8">
-            <img src="https://i.postimg.cc/Jh5Jvrc9/IMG-7901.png" alt="Logo TurboSul" class="w-28 h-28 mb-4">
-            <h1 class="text-xl font-bold text-gray-800">TurboSul - Controle de Produção</h1>
+    <!-- HEADER -->
+    <header class="bg-white border-b border-slate-200 px-8 py-4 flex items-center justify-between shadow-sm">
+        <div class="flex items-center space-x-4">
+            <img src="https://i.postimg.cc/Jh5Jvrc9/IMG-7901.png" alt="Logo TurboSul" class="h-10 w-10">
+            <div>
+                <h1 class="text-base font-extrabold text-slate-950 uppercase tracking-tight">TurboSul - Controle de Produção</h1>
+                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Gestão Administrativa de Acessos</p>
+            </div>
         </div>
+        <a href="https://mareflow.github.io/registro/" class="text-xs font-bold text-blue-600 hover:text-blue-800 transition uppercase tracking-wider">
+            <i class="fa-solid fa-users-gear mr-2"></i> Painel de Operadores
+        </a>
+    </header>
 
-        <!-- Formulário de Login -->
-        <form id="login-form" class="space-y-6">
-            <!-- Campo de Email -->
-            <div>
-                <label for="email" class="block text-sm font-medium text-gray-600 mb-2">Usuário</label>
-                <input 
-                    type="email" 
-                    id="email" 
-                    name="email" 
-                    required
-                    placeholder="seu.email@turbosul.com"
-                    class="custom-placeholder input-style w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                >
+    <!-- LOGIN CARD -->
+    <main class="flex-1 flex items-center justify-center p-6">
+        <div class="bg-white w-full max-w-sm rounded-3xl shadow-xl border border-slate-100 p-8">
+            
+            <div class="text-center mb-8">
+                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-xl shadow-inner">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h2 class="text-2xl font-black text-slate-900 uppercase tracking-tighter">Entrar no Sistema</h2>
+                <p class="text-xs text-slate-400 font-medium mt-1">Acesse sua estação de trabalho produtiva</p>
             </div>
 
-            <!-- Campo de Senha -->
-            <div>
-                <label for="password" class="block text-sm font-medium text-gray-600 mb-2">Senha</label>
-                <input 
-                    type="password" 
-                    id="password" 
-                    name="password" 
-                    required
-                    placeholder="Sua senha"
-                    class="custom-placeholder input-style w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                >
-            </div>
+            <!-- Formulário de Login -->
+            <form id="login-form" class="space-y-5">
+                <!-- E-mail -->
+                <div>
+                    <label for="login-email" class="block text-[10px] font-black text-slate-500 uppercase tracking-wider mb-2">E-mail Corporativo</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
+                            <i class="fa-regular fa-envelope"></i>
+                        </span>
+                        <input type="email" id="login-email" required placeholder="seu.nome@turbosul.com.br" 
+                               class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-3 text-sm font-semibold text-slate-800 input-focus transition-all">
+                    </div>
+                </div>
 
-            <!-- Botão de Entrar -->
-            <div>
-                <button 
-                    type="submit"
-                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50 transition-all duration-300 ease-in-out"
-                >
-                    Entrar
+                <!-- Senha -->
+                <div>
+                    <label for="login-password" class="block text-[10px] font-black text-slate-500 uppercase tracking-wider mb-2">Senha</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
+                            <i class="fa-solid fa-lock"></i>
+                        </span>
+                        <input type="password" id="login-password" required placeholder="Digite sua senha" 
+                               class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-3 text-sm font-semibold text-slate-800 input-focus transition-all">
+                    </div>
+                </div>
+
+                <!-- Botão Submit -->
+                <button type="submit" id="btn-submit-login" 
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-4 rounded-xl text-xs uppercase tracking-widest shadow-lg shadow-blue-100 transition duration-150 flex items-center justify-center">
+                    <i class="fa-solid fa-right-to-bracket mr-2"></i> Conectar Estação
                 </button>
-            </div>
-        </form>
-
-        <!-- Mensagem de Erro -->
-        <div class="mt-6 text-center h-5"> 
-            <p id="error-message" class="text-sm font-medium text-red-600"></p>
+            </form>
         </div>
     </main>
 
-    <!-- Inclusão da biblioteca do Supabase via CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- NOTIFICAÇÕES (Toast) -->
+    <div id="toast" class="fixed bottom-6 right-6 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 z-50 flex items-center space-x-3 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-xl border border-slate-800 text-xs font-black uppercase tracking-wider">
+        <span id="toast-icon" class="text-lg"></span>
+        <span id="toast-message">--</span>
+    </div>
 
-    <!-- Lógica de Autenticação com JavaScript Puro (CORRIGIDA) -->
+    <!-- FOOTER -->
+    <footer class="py-3 text-center border-t bg-white/40 backdrop-blur-sm z-10">
+        <div class="flex items-center justify-center space-x-2">
+            <span class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Desenvolvido por</span>
+            <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest">Maré Flow</span>
+            <span class="text-slate-300">|</span>
+            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter italic">TurboSul Controle de Produção © 2026</span>
+        </div>
+    </footer>
+
+    <!-- Supabase SDK e Lógica de Login/Roteamento -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // 1. Inicialização do Cliente Supabase
         const SUPABASE_URL = 'https://zghaqlaqozsskfldgsfe.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpnaGFxbGFxb3pzc2tmbGRnc2ZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkyMDY1MzQsImV4cCI6MjA4NDc4MjUzNH0.aC2DMOUNhS2uK6KGI5Sf2c2vGhrCKHMnRyZhL3WwSus';
-        
-        // CORREÇÃO APLICADA AQUI: Usando 'supabaseClient' para a instância
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // 2. Lógica do Formulário de Login
-        const loginForm = document.getElementById('login-form');
-        const errorMessage = document.getElementById('error-message');
-        const DESTINATION_URL = 'https://mareflow.github.io/turbosul-prevendas/';
+        // --- MAPA DE DIRECIONAMENTO OFICIAL (Tabela de Páginas) ---
+        const ROLE_REDIRECTS = {
+            'PRE-VENDAS': 'https://mareflow.github.io/turbosul-prevendas/',
+            'ANALISE-TECNICA': 'https://mareflow.github.io/analise-tecnica/',
+            'VENDAS': 'https://mareflow.github.io/decisa-comercialvendas/',
+            'TRIAGEM': 'https://mareflow.github.io/triagem/',
+            'DESMONTAGEM': 'https://mareflow.github.io/desmontagem/',
+            'RETIFICA': 'https://mareflow.github.io/retifica/',
+            'SOLDA': 'https://mareflow.github.io/solda/',
+            'METROLOGIA': 'https://mareflow.github.io/metrologia/',
+            'BANCADA': 'https://mareflow.github.io/bancada/',
+            'BALANCEAMENTO': 'https://mareflow.github.io/balanceamento/',
+            'MONTAGEM': 'https://mareflow.github.io/montagem/',
+            'CONTROLE-QUALIDADE': 'https://mareflow.github.io/qualidade/',
+            'EXPEDICAO': 'https://mareflow.github.io/expedicao/',
+            'ADMINISTRADOR': 'https://mareflow.github.io/admin/',
+            'QUADRO-PRODUCAO': 'https://mareflow.github.io/quadrodeproducao/'
+        };
 
-        loginForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const icon = document.getElementById('toast-icon');
+            const msg = document.getElementById('toast-message');
 
-            errorMessage.textContent = '';
+            msg.innerText = message;
+            toast.classList.remove('border-green-500', 'border-red-500');
 
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            // Chamada CORRIGIDA: Usa a nova variável 'supabaseClient'
-            const { error } = await supabaseClient.auth.signInWithPassword({
-                email: email,
-                password: password,
-            });
-
-            // 3. Tratamento da Resposta
-            if (error) {
-                errorMessage.textContent = 'Usuário ou senha inválidos.';
+            if (type === 'success') {
+                icon.innerHTML = `<i class="fa-regular fa-circle-check text-green-500"></i>`;
+                toast.classList.add('border-green-500');
             } else {
-                window.location.href = DESTINATION_URL;
+                icon.innerHTML = `<i class="fa-regular fa-circle-xmark text-red-500"></i>`;
+                toast.classList.add('border-red-500');
+            }
+
+            toast.classList.remove('opacity-0', 'translate-y-20', 'pointer-events-none');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-20', 'pointer-events-none');
+                toast.classList.remove('opacity-100', 'translate-y-0');
+            }, 4000);
+        }
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+            const btn = document.getElementById('btn-submit-login');
+
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> Autenticando...`;
+
+            try {
+                // 1. Tenta autenticar o usuário
+                const { data, error } = await supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+                if (error) {
+                    showToast(error.message, 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = `<i class="fa-solid fa-right-to-bracket mr-2"></i> Conectar Estação`;
+                    return;
+                }
+
+                if (data && data.user) {
+                    let role = data.user.user_metadata?.role;
+
+                    // 2. CONTINGÊNCIA: Se não estiver no user_metadata, busca na tabela profiles
+                    if (!role) {
+                        const { data: profile, error: profileError } = await supabaseClient
+                            .from('profiles')
+                            .select('role')
+                            .eq('id', data.user.id)
+                            .single();
+                        
+                        if (!profileError && profile) {
+                            role = profile.role;
+                        }
+                    }
+
+                    // 3. REDIRECIONAMENTO DINÂMICO
+                    const targetUrl = ROLE_REDIRECTS[role];
+                    if (targetUrl) {
+                        showToast('Autenticado com sucesso! Redirecionando...');
+                        setTimeout(() => {
+                            window.location.href = targetUrl;
+                        }, 1000);
+                    } else {
+                        // Se o papel não for mapeado, envia para a tela geral (Quadro de Produção)
+                        window.location.href = 'https://mareflow.github.io/quadrodeproducao/';
+                    }
+                }
+
+            } catch (err) {
+                console.error(err);
+                showToast('Falha na conexão de rede.', 'error');
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fa-solid fa-right-to-bracket mr-2"></i> Conectar Estação`;
             }
         });
     </script>
